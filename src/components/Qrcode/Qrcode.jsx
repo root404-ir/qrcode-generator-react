@@ -21,6 +21,42 @@ const Qrcode = () => {
             setQrValue('')
         }
     }
+
+    const downloadQrCode = () => {
+        const svgElement = document.querySelector('svg')
+        if (!svgElement) {
+            alert("could not find qrcode");
+            return;
+        }
+        const canvas = document.createElement('canvas')
+        const context = canvas.getContext("2d")
+
+        const img = new Image()
+        const svgData = new XMLSerializer().serializeToString(svgElement)
+
+        const svgBlob = new Blob([svgData], { type: "image/svg+xml" })
+        const url = URL.createObjectURL(svgBlob)
+
+        img.onload = () => {
+            canvas.width = img.width
+            canvas.height = img.height
+
+            context.drawImage(img, 0, 0)
+
+            const pngUrl = canvas.toDataURL("image/png")
+
+            const a = document.createElement('a')
+            a.href = pngUrl
+            a.download = "QRcode.png"
+            document.body.appendChild(a)
+            a.click()
+            document.body.removeChild(a)
+
+            URL.revokeObjectURL(url)
+        }
+        img.src = url
+    }
+
     return (
         <div className="qrcode-wrapper">
             <h2 className="title"><span className="qr-title">QR</span> Code Generator</h2>
@@ -39,6 +75,11 @@ const Qrcode = () => {
             <div className="qrcode">
                 {qrValue && <QRCodeSVG value={link} size={200} fgColor={color} />}
             </div>
+            {qrValue && (
+                <div>
+                    <button onClick={downloadQrCode} className="downlaod-qr">download this QR</button>
+                </div>
+            )}
         </div>
     )
 }
