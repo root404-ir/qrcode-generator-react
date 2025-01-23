@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { QRCodeSVG } from 'qrcode.react';
+import './Qrcode.css'
 const Qrcode = () => {
     const [link, setLink] = useState('')
     const [qrValue, setQrValue] = useState('')
@@ -21,11 +22,13 @@ const Qrcode = () => {
         }
     }
     return (
-        <div>
-            <h2>qr code generator</h2>
-            <input type="text" value={link} onChange={(e) => setLink(e.target.value)} />
-            <button onClick={handleGenerate}>generate QR</button>
-            <select onChange={(e) => setColor(e.target.value)}>
+        <div className="qrcode-wrapper">
+            <h2 className="title"><span className="qr-title">QR</span> Code Generator</h2>
+            <div className="options">
+                <input type="text" className="text-box" placeholder="enter your link" value={link} onChange={(e) => setLink(e.target.value)} />
+                <button className="generate" onClick={handleGenerate}>generate QR</button>
+            </div>
+            <select className="select-color" onChange={(e) => setColor(e.target.value)}>
                 <option value="black">black</option>
                 <option value="blue">blue</option>
                 <option value="red">red</option>
@@ -33,7 +36,9 @@ const Qrcode = () => {
                 <option value="gold">gold</option>
                 <option value="green">green</option>
             </select>
-            {qrValue && <QRCodeSVG value={link} size={200} fgColor={color} />}
+            <div className="qrcode">
+                {qrValue && <QRCodeSVG value={link} size={200} fgColor={color} />}
+            </div>
         </div>
     )
 }
