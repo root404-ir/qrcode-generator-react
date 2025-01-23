@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { QRCodeSVG } from 'qrcode.react';
 import './Qrcode.css'
+import { Bounce, toast, ToastContainer } from "react-toastify";
 const Qrcode = () => {
     const [link, setLink] = useState('')
     const [qrValue, setQrValue] = useState('')
@@ -11,6 +12,17 @@ const Qrcode = () => {
             new URL(str)
             return true
         } catch {
+            toast.error('invalid link', {
+                position: "top-left",
+                autoClose: 5000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+                transition: Bounce,
+                });
             return false
         }
     }
@@ -60,6 +72,19 @@ const Qrcode = () => {
 
     return (
         <div className="qrcode-wrapper">
+            <ToastContainer
+                position="top-left"
+                autoClose={5000}
+                hideProgressBar
+                newestOnTop
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="colored"
+                transition={Bounce}
+            />
             <h2 className="title"><span className="qr-title">QR</span> Code Generator</h2>
             <div className="generate-qr">
                 <input type="text" className="text-box" placeholder="enter your link" value={link} onChange={(e) => setLink(e.target.value)} />
