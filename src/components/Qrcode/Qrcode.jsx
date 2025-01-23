@@ -5,6 +5,7 @@ const Qrcode = () => {
     const [link, setLink] = useState('')
     const [qrValue, setQrValue] = useState('')
     const [color, setColor] = useState('black')
+    const [size, setSize] = useState(128)
     const isValidUrl = str => {
         try {
             new URL(str)
@@ -60,20 +61,31 @@ const Qrcode = () => {
     return (
         <div className="qrcode-wrapper">
             <h2 className="title"><span className="qr-title">QR</span> Code Generator</h2>
-            <div className="options">
+            <div className="generate-qr">
                 <input type="text" className="text-box" placeholder="enter your link" value={link} onChange={(e) => setLink(e.target.value)} />
                 <button className="generate" onClick={handleGenerate}>generate QR</button>
             </div>
-            <select className="select-color" onChange={(e) => setColor(e.target.value)}>
-                <option value="black">black</option>
-                <option value="blue">blue</option>
-                <option value="red">red</option>
-                <option value="magenta">magenta</option>
-                <option value="gold">gold</option>
-                <option value="green">green</option>
-            </select>
+            <div className="options">
+                <select className="select-option" onChange={(e) => setColor(e.target.value)}>
+                    <option>choose QR color</option>
+                    <option value="black">black</option>
+                    <option value="blue">blue</option>
+                    <option value="red">red</option>
+                    <option value="magenta">magenta</option>
+                    <option value="gold">gold</option>
+                    <option value="green">green</option>
+                </select>
+                <select className="select-option" onChange={(e) => setSize(e.target.value)}>
+                    <option>choose QR size</option>
+                    <option value={128}>128</option>
+                    <option value={200}>200</option>
+                    <option value={240}>240</option>
+                    <option value={260}>260</option>
+                    <option value={300}>300</option>
+                </select>
+            </div>
             <div className="qrcode">
-                {qrValue && <QRCodeSVG value={link} size={200} fgColor={color} />}
+                {qrValue && <QRCodeSVG value={link} title={link} size={size} fgColor={color} />}
             </div>
             {qrValue && (
                 <div>

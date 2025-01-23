@@ -29,7 +29,7 @@ body {
     color: #892190;
 }
 
-.options {
+.generate-qr {
     position: relative;
 }
 
@@ -44,7 +44,7 @@ body {
 
 .text-box:focus {
     outline: 0;
-    width: 600px;
+    width: 500px;
 }
 
 .generate {
@@ -65,7 +65,12 @@ body {
     background-color: #cd63d4;
 }
 
-.select-color {
+.options {
+    display: flex;
+    gap: 1rem;
+}
+
+.select-option {
     border-radius: 10px;
     padding: 10px 7px;
     margin-top: 1rem;
